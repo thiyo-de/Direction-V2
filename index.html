@@ -2,10 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map For Gandhigram University</title>
+    <title>Location Finder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script src="main.js"></script>
+
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="sidebar">
+            <h2>Destinations</h2>
+            <p id="user-location">Fetching your location...</p>
+            <div class="spinner" id="spinner"></div>
+            <ul id="placeList" class="hidden"></ul>
+        </div>
+
+        <!-- Google Map -->
+        <div class="map-area">
+            <iframe id="map" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        const places = [
+            { name: "Trichy", lat: 10.7905, lng: 78.7047 },
+            { name: "Chennai", lat: 13.0827, lng: 80.2707 },
+            { name: "Coimbatore", lat: 11.0168, lng: 76.9558 },
+            { name: "Madurai", lat: 9.9252, lng: 78.1198 },
+            { name: "Salem", lat: 11.6643, lng: 78.1460 },
+            { name: "Erode", lat: 11.3410, lng: 77.7172 },
+            { name: "Thanjavur", lat: 10.7867, lng: 79.1391 },
+            { name: "Tirunelveli", lat: 8.7139, lng: 77.7567 },
+            { name: "Tiruppur", lat: 11.1085, lng: 77.3411 },
+            { name: "Vellore", lat: 12.9165, lng: 79.1325 },
+            { name: "Nagercoil", lat: 8.1780, lng: 77.4340 },
+            { name: "Karur", lat: 10.9601, lng: 78.0766 },
+            { name: "Dindigul", lat: 10.3656, lng: 77.9700 },
+            { name: "Kanchipuram", lat: 12.8342, lng: 79.7036 },
+            { name: "Cuddalore", lat: 11.7480, lng: 79.7714 },
+            { name: "Tuticorin", lat: 8.7642, lng: 78.1348 },
+            { name: "Kumbakonam", lat: 10.9601, lng: 79.3845 },
+            { name: "Namakkal", lat: 11.2205, lng: 78.1652 },
+            { name: "Theni", lat: 10.0153, lng: 77.4777 },
+            { name: "Perambalur", lat: 11.2354, lng: 78.8810 }
+        ];
+
+        let userLat = 0;
+        let userLng = 0;
+
+        function showPosition(position) {
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
+
+            document.getElementById('user-location').innerText = `You are here: ${userLat.toFixed(4)}, ${userLng.toFixed(4)}`;
+
+            // Show map centered on user location
+            document.getElementById('map').src = `https://maps.google.com/maps?q=${userLat},${userLng}&hl=es;&output=embed`;
+
+            // Hide spinner and show menu
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('placeList').classList.remove('hidden');
+
+            // Render the place menu
+            const placeList = document.getElementById('placeList');
+            places.forEach(place => {
+                const li = document.createElement('li');
+                li.textContent = place.name;
+                li.onclick = () => {
+                    document.getElementById('map').src = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${place.lat},${place.lng}&travelmode=driving&hl=en`;
+                };
+                placeList.appendChild(li);
+            });
+        }
+
+        function showError(error) {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('user-location').innerText = "Unable to fetch your location.";
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('user-location').innerText = "Geolocation is not supported by this browser.";
+        }
+    </script>
+
 </body>
 </html>
