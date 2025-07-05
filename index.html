@@ -2,55 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Location and Google Maps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map For Gandhigram University</title>
 </head>
 <body>
-
-    <h2>Get Your Location and Open in Google Maps</h2>
-    <button onclick="getUserLocation()">Get My Location</button>
-
-    <p id="output"></p>
-
-    <script>
-        function getUserLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                document.getElementById("output").innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            let latitude = position.coords.latitude;
-            let longitude = position.coords.longitude;
-
-            // Show coordinates on the page
-            document.getElementById("output").innerHTML = `Latitude: ${latitude} <br> Longitude: ${longitude}`;
-
-            // Build Google Maps URL to show user's location
-            let mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-
-            // Open Google Maps in a new tab
-            window.open(mapsUrl, '_blank');
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
-        }
-    </script>
-
+    <script src="main.js"></script>
 </body>
 </html>
