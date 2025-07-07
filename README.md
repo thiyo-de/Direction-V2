@@ -3,7 +3,7 @@
 A simple web application to get user location and show directions to a specific destination using Google Maps, with live user tracking.
 
 ## 🌐 Live Demo
-👉 [View Project](https://neon-empanada-2d69b6.netlify.app/)
+👉 [View Project](https://uandi.media/Map_Directions/index.html)
 
 ---
 
