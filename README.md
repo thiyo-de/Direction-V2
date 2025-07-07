@@ -1,37 +1,38 @@
-# Directions 🚗🗺️
+# 📍 Direction-V2 – Virtual Tour Navigation Module
 
-A simple web application to get user location and show directions to a specific destination using Google Maps, with live user tracking.
+**Direction-V2** is the second iteration of a lightweight, embeddable **direction feature** tailored for **Virtual Tour projects**. It provides a seamless way to display Google Maps routes between curated locations—ideal for tourism, campus navigation, cultural walks, or smart city apps.
 
-## 🌐 Live Demo
-👉 [View Project](https://uandi.media/Map_Directions/index.html)
+![Screenshot](screenshot.png)
 
 ---
 
-## 📸 Screenshots
-![Project Screenshot](screenshot.png)
+## 🆕 What's New in V2
 
-*Make sure to add a screenshot named `screenshot.png` in your Netlify deployment folder or update this link with the correct image path.*
+- ✨ Cleaner UI and improved mobile responsiveness
+- 📌 Easy-to-edit coordinates for quick map updates
+- 🔗 Simplified structure for fast integration
+- 📷 Visual preview added (screenshot support)
+- 🧱 Ideal for use inside React Native WebView or HTML-based apps
 
 ---
 
 ## 🚀 Features
-- Get the user's live geolocation.
-- Show user location on Google Maps with a marker.
-- Display directions from the user’s current location to a predefined destination.
-- Seamless user experience with live location updates.
-- Virtual tour integration (Gandhigram project).
+
+- 🗺️ Google Maps Embed Integration (Static & Dynamic)
+- 🧭 Predefined Route Directions
+- 💡 Clean, minimalist design
+- 📱 Mobile & touch-friendly
+- 🌐 Plug-and-play with any HTML or React frontend
 
 ---
 
-## 🔧 Tech Stack
-- **HTML**
-- **CSS**
-- **JavaScript**
-- **Google Maps (via iframe)**
+## 📂 Folder Structure
 
----
-
-## 📂 How to Run Locally
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/thiyo-de/Directions.git
+```bash
+Direction-V2/
+├── assets/             # Screenshots, icons
+│   └── screenshot.png  # UI preview
+├── css/                # Stylesheets
+├── js/                 # Map interaction logic (optional)
+├── index.html          # Main interface
+└── README.md           # Documentation
