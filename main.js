@@ -24,33 +24,68 @@ const places = [
 let userLat = 0;
 let userLng = 0;
 
+// 🆕 Get human-readable address using Nominatim
+function getLocationName(lat, lon, callback) {
+  fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      const location = data.address.city || data.address.town || data.address.village || data.display_name;
+      callback(location);
+    })
+    .catch((error) => {
+      console.error("Geocoding error:", error);
+      callback("Unknown Location");
+    });
+}
+
 function showPosition(position) {
   userLat = position.coords.latitude;
   userLng = position.coords.longitude;
 
-  document.getElementById(
-    "user-location"
-  ).innerText = `You are here: ${userLat.toFixed(4)}, ${userLng.toFixed(4)}`;
-
-  // Show map centered on user location
-  document.getElementById(
-    "map"
-  ).src = `https://maps.google.com/maps?q=${userLat},${userLng}&hl=es;&output=embed`;
-
-  // Hide loader, show content
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("mainContent").classList.remove("hidden");
-
-  // Render the place menu
+  const mapIframe = document.getElementById("map");
   const placeList = document.getElementById("placeList");
-  places.forEach((place) => {
-    const li = document.createElement("li");
-    li.textContent = place.name;
-    li.onclick = () => {
-      const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${place.lat},${place.lng}&travelmode=driving&hl=en`;
-      window.open(url, "_blank"); // Open in a new tab
+
+  getLocationName(userLat, userLng, (locationName) => {
+    document.getElementById(
+      "user-location"
+    ).innerText = `You are here: ${locationName} (${userLat.toFixed(
+      4
+    )}, ${userLng.toFixed(4)})`;
+
+    mapIframe.src = `https://maps.google.com/maps?q=${userLat},${userLng}&hl=es;&output=embed`;
+
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("mainContent").classList.remove("hidden");
+
+    let currentActive = null;
+
+    const yourLocationLi = document.createElement("li");
+    yourLocationLi.textContent = "📍 Your Location";
+    yourLocationLi.onclick = () => {
+      mapIframe.src = `https://maps.google.com/maps?q=${userLat},${userLng}&hl=es;&output=embed`;
+      if (currentActive) currentActive.classList.remove("active");
+      yourLocationLi.classList.add("active");
+      currentActive = yourLocationLi;
     };
-    placeList.appendChild(li);
+    placeList.appendChild(yourLocationLi);
+
+    places.forEach((place) => {
+      const li = document.createElement("li");
+      li.textContent = place.name;
+      li.onclick = () => {
+        const mapSrc = `https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d19454.29600938653!2d78.68570509848412!3d10.77768427993685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e0!4m3!3m2!1d${userLat}!2d${userLng}!4m3!3m2!1d${place.lat}!2d${place.lng}!5e1!3m2!1sen!2sin!4v${Date.now()}!5m2!1sen!2sin`;
+        mapIframe.src = mapSrc;
+        if (currentActive) currentActive.classList.remove("active");
+        li.classList.add("active");
+        currentActive = li;
+      };
+      placeList.appendChild(li);
+    });
+
+    yourLocationLi.classList.add("active");
+    currentActive = yourLocationLi;
   });
 }
 
