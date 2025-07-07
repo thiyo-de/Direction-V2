@@ -4,6 +4,8 @@
 
 ![Screenshot](screenshot.png)
 
+🔗 **Live Preview:** [View Project](https://uandi.media/Map_Directions/index.html)
+
 ---
 
 ## 🆕 What's New in V2
@@ -36,3 +38,6 @@ Direction-V2/
 ├── js/                 # Map interaction logic (optional)
 ├── index.html          # Main interface
 └── README.md           # Documentation
+
+git clone https://github.com/thiyo-de/Direction-V2.git
+cd Direction-V2
